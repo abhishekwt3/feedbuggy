@@ -1,0 +1,33 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "8942d9684d3c430bdf7995a4e760f9ec"
+application_url = "https://tells-commentary-expertise-treat.trycloudflare.com"
+embedded = true
+name = "feedbuggy"
+handle = "feedbuggy"
+
+[webhooks]
+api_version = "2024-10"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://tells-commentary-expertise-treat.trycloudflare.com/auth/callback",
+  "https://tells-commentary-expertise-treat.trycloudflare.com/auth/shopify/callback",
+  "https://tells-commentary-expertise-treat.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
+
+[build]
+dev_store_url = "test-store-xo12.myshopify.com"
+include_config_on_deploy = true
+automatically_update_urls_on_dev = true

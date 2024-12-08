@@ -1,0 +1,62 @@
+<!-- Floating Feedback Button -->
+<div id="feedback-widget-container">
+  <button 
+    id="feedback-widget-button" 
+    style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background-color: {{ settings.button_color }}; color: white; padding: 15px; border: none; border-radius: 50%; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); cursor: pointer;"
+    aria-label="Leave Feedback"
+  >
+    {{ settings.button_text }}
+  </button>
+
+  <!-- Feedback Modal -->
+  <div 
+    id="feedback-modal" 
+    style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1100; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); max-width: 400px; width: 90%;"
+  >
+    <h3 style="margin-bottom: 15px; font-size: 18px; font-weight: bold; color: #333;">We Value Your Feedback</h3>
+    <textarea 
+      id="feedback-text" 
+      placeholder="Write your feedback here..." 
+      style="width: 100%; height: 100px; margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; resize: none;"
+    ></textarea>
+    <div style="text-align: right;">
+      <button 
+        id="submit-feedback" 
+        style="background-color: #007acc; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;"
+      >
+        Submit
+      </button>
+      <button 
+        id="close-modal" 
+        style="margin-left: 10px; background-color: #f0f0f0; color: #333; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Include Feedback Widget Script -->
+<script src="{{ 'feedback_icon.js' | asset_url }}" defer></script>
+
+<!-- Schema Tag -->
+{% schema %}
+{
+  "name": "Feedback Widget",
+  "target":"section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Color",
+      "default": "#007acc"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "📝 Feedback"
+    }
+  ]
+}
+{% endschema %}
