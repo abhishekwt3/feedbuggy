@@ -30,3 +30,10 @@ model Session {
   collaborator  Boolean?  @default(false)
   emailVerified Boolean?  @default(false)
 }
+
+model Feedback {
+  id        Int      @id @default(autoincrement())
+  email     String
+  feedback  String
+  createdAt DateTime @default(now())
+}

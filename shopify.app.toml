@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "8942d9684d3c430bdf7995a4e760f9ec"
-application_url = "https://tells-commentary-expertise-treat.trycloudflare.com"
+application_url = "https://premier-think-like-recycling.trycloudflare.com"
 embedded = true
 name = "feedbuggy"
 handle = "feedbuggy"
@@ -19,9 +19,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://tells-commentary-expertise-treat.trycloudflare.com/auth/callback",
-  "https://tells-commentary-expertise-treat.trycloudflare.com/auth/shopify/callback",
-  "https://tells-commentary-expertise-treat.trycloudflare.com/api/auth/callback"
+  "https://premier-think-like-recycling.trycloudflare.com/auth/callback",
+  "https://premier-think-like-recycling.trycloudflare.com/auth/shopify/callback",
+  "https://premier-think-like-recycling.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]
