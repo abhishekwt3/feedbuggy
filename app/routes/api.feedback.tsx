@@ -6,39 +6,37 @@ export let action: ActionFunction = async ({ request }) => {
     const body = await request.json();
     const { email, feedback } = body;
 
-    // Validation
     if (!feedback) {
-      return new Response(
-        JSON.stringify({ message: 'Feedback is required.' }),
-        {
-          status: 400,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      return new Response(JSON.stringify({ message: 'Feedback is required.' }), {
+        status: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*', // Allow all origins
+        },
+      });
     }
 
-    // Store the feedback in the Prisma database
     await prisma.feedback.create({
-      data: {
-        email: email || null,
-        feedback,
-      },
+      data: { email: email || null, feedback },
     });
 
-    return new Response(
-      JSON.stringify({ message: 'Feedback submitted successfully!' }),
-      {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    return new Response(JSON.stringify({ message: 'Feedback submitted successfully!' }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*', // Allow all origins
+      },
+    });
   } catch (error) {
     console.error('Error saving feedback:', error);
     return new Response(
       JSON.stringify({ message: 'Failed to submit feedback.' }),
       {
         status: 500,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*', // Allow all origins
+        },
       }
     );
   }

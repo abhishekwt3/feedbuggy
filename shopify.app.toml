@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "8942d9684d3c430bdf7995a4e760f9ec"
-application_url = "https://premier-think-like-recycling.trycloudflare.com"
+application_url = "https://activity-clothes-guild-graphic.trycloudflare.com"
 embedded = true
 name = "feedbuggy"
 handle = "feedbuggy"
@@ -19,9 +19,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://premier-think-like-recycling.trycloudflare.com/auth/callback",
-  "https://premier-think-like-recycling.trycloudflare.com/auth/shopify/callback",
-  "https://premier-think-like-recycling.trycloudflare.com/api/auth/callback"
+  "https://activity-clothes-guild-graphic.trycloudflare.com/auth/callback",
+  "https://activity-clothes-guild-graphic.trycloudflare.com/auth/shopify/callback",
+  "https://activity-clothes-guild-graphic.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]

@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Send feedback to API
-      const response = await fetch('/api/feedback', {
+      const response = await fetch('https://activity-clothes-guild-graphic.trycloudflare.com/api/feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('There was an error submitting your feedback. Please try again.');
       }
     } catch (error) {
-      console.error('Network error:', error);
+      console.log('Network error:', error);
       alert('A network error occurred. Please check your connection and try again.');
     }
   });
