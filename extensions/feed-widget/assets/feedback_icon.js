@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Send feedback to API
-      const response = await fetch('https://activity-clothes-guild-graphic.trycloudflare.com/api/feedback', {
+      const response = await fetch('https://feedbuggy.vercel.app/api/feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
