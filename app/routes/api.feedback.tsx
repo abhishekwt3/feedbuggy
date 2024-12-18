@@ -1,8 +1,8 @@
-import { ActionFunction } from '@remix-run/node';
+import { ActionFunction, LoaderFunction } from '@remix-run/node';
 import prisma from '../db.server';
 
-export let action: ActionFunction = async ({ request }) => {
-  // Handle OPTIONS preflight request
+// Handle OPTIONS requests in the loader
+export let loader: LoaderFunction = async ({ request }) => {
   if (request.method === 'OPTIONS') {
     return new Response(null, {
       status: 204, // No Content
@@ -14,7 +14,12 @@ export let action: ActionFunction = async ({ request }) => {
     });
   }
 
-  // Handle POST request
+  // If any other method is sent to the loader, return a method not allowed error
+  return new Response(null, { status: 405 });
+};
+
+// Handle POST requests in the action
+export let action: ActionFunction = async ({ request }) => {
   try {
     const body = await request.json();
     const { email, feedback } = body;
@@ -24,7 +29,7 @@ export let action: ActionFunction = async ({ request }) => {
         status: 400,
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*', // Allow all origins
+          'Access-Control-Allow-Origin': '*',
         },
       });
     }
@@ -37,7 +42,7 @@ export let action: ActionFunction = async ({ request }) => {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*', // Allow all origins
+        'Access-Control-Allow-Origin': '*',
       },
     });
   } catch (error) {
@@ -48,7 +53,7 @@ export let action: ActionFunction = async ({ request }) => {
         status: 500,
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*', // Allow all origins
+          'Access-Control-Allow-Origin': '*',
         },
       }
     );
