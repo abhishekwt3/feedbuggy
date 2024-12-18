@@ -2,11 +2,10 @@ import { type LoaderFunctionArgs } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import prisma from '../db.server';
 import { authenticate } from "../shopify.server";
-
+import { useState } from 'react';
 // Define the loader function
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { admin } = await authenticate.admin(request);
-
   try {
     const getshopId = await admin.graphql(`query { shop { url } }`);
 
@@ -33,18 +32,36 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 // Dashboard Component
 export default function DashboardPage() {
-  const { feedbackList } = useLoaderData<typeof loader>();
+  const { feedbackList: initialFeedbackList } = useLoaderData<typeof loader>();
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [feedbackList, setFeedbackList] = useState(initialFeedbackList);
+
+  const toggleSort = () => {
+    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    setSortOrder(newSortOrder);
+    const sortedList = [...feedbackList].sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return newSortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+    });
+    setFeedbackList(sortedList);
+  };
 
   return (
     <div style={styles.container}>
       <h1 style={styles.title}>Feedback Dashboard</h1>
       <div style={styles.tableContainer}>
+        <div style={styles.sortButtonContainer}>
+          <button onClick={toggleSort} style={styles.sortButton}>
+            Sort by Date {sortOrder === 'asc' ? '↑' : '↓'}
+          </button>
+        </div>
         <table style={styles.table}>
           <thead>
             <tr>
-              <th style={styles.th}>Email</th>
-              <th style={styles.th}>Feedback</th>
-              <th style={styles.th}>Date</th>
+            <th style={styles.th}>Feedback</th>
+            <th style={styles.th}>Email</th>
+            <th style={styles.th}>Date</th>
             </tr>
           </thead>
           <tbody>
@@ -114,5 +131,18 @@ const styles = {
     padding: '20px',
     fontSize: '16px',
     color: '#555',
+  },
+  sortButtonContainer: {
+    padding: '10px 15px',
+    textAlign: 'right',
+  },
+  sortButton: {
+    padding: '8px 12px',
+    backgroundColor: '#0070f3',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontSize: '14px',
   },
 };
