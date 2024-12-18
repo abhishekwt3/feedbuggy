@@ -2,6 +2,19 @@ import { ActionFunction } from '@remix-run/node';
 import prisma from '../db.server';
 
 export let action: ActionFunction = async ({ request }) => {
+  // Handle OPTIONS preflight request
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204, // No Content
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Allow all origins
+        'Access-Control-Allow-Methods': 'OPTIONS, POST', // Allowed methods
+        'Access-Control-Allow-Headers': 'Content-Type', // Allowed headers
+      },
+    });
+  }
+
+  // Handle POST request
   try {
     const body = await request.json();
     const { email, feedback } = body;
