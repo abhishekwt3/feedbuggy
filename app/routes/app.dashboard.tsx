@@ -1,23 +1,27 @@
-import { LoaderFunction } from '@remix-run/node';
+import { type LoaderFunctionArgs } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import prisma from '../db.server';
+import { authenticate } from "../shopify.server";
 
 // Define the loader function
-export const loader: LoaderFunction = async ({ request }) => {
-  try {
-    const url = new URL(request.url);
-    const shopId = url.searchParams.get('shopUrl');
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const { admin } = await authenticate.admin(request);
 
-    if (!shopId) {
+  try {
+    const getshopId = await admin.graphql(`query { shop { url } }`);
+
+    if (!getshopId) {
       throw new Response('Shop URL is required.', { status: 400 });
     }
+
+    const shopData = await getshopId.json();
+    const shopId = shopData.data.shop.url;
 
     // Fetch feedback from the database for the current shop
     const feedbackList = await prisma.feedback.findMany({
       where: { shopId },
       orderBy: { createdAt: 'desc' }, // Sort by most recent feedback
     });
-
 
     // Return data directly
     return { feedbackList };
@@ -27,39 +31,88 @@ export const loader: LoaderFunction = async ({ request }) => {
   }
 };
 
-// Dashboard component
+// Dashboard Component
 export default function DashboardPage() {
   const { feedbackList } = useLoaderData<typeof loader>();
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Feedback Dashboard</h1>
-      <table cellPadding="10" cellSpacing="0" style={{ width: '100%' }}>
-        <thead>
-          <tr>
-            <th>Email</th>
-            <th>Feedback</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {feedbackList.length === 0 ? (
+    <div style={styles.container}>
+      <h1 style={styles.title}>Feedback Dashboard</h1>
+      <div style={styles.tableContainer}>
+        <table style={styles.table}>
+          <thead>
             <tr>
-              <td colSpan={3} style={{ textAlign: 'center' }}>
-                No feedback available.
-              </td>
+              <th style={styles.th}>Email</th>
+              <th style={styles.th}>Feedback</th>
+              <th style={styles.th}>Date</th>
             </tr>
-          ) : (
-            feedbackList.map((feedback) => (
-              <tr key={feedback.id}>
-                <td>{feedback.email || 'Anonymous'}</td>
-                <td>{feedback.feedback}</td>
-                <td>{new Date(feedback.createdAt).toLocaleString()}</td>
+          </thead>
+          <tbody>
+            {feedbackList.length === 0 ? (
+              <tr>
+                <td colSpan={3} style={styles.noData}>
+                  No feedback available.
+                </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ) : (
+              feedbackList.map((feedback) => (
+                <tr key={feedback.id}>
+                  <td style={styles.td}>{feedback.email || 'Anonymous'}</td>
+                  <td style={styles.td}>{feedback.feedback}</td>
+                  <td style={styles.td}>
+                    {new Date(feedback.createdAt).toLocaleString()}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
+
+const styles = {
+  container: {
+    padding: '20px',
+    fontFamily: 'Arial, sans-serif',
+    backgroundColor: '#f9f9f9',
+    minHeight: '100vh',
+  },
+  title: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    marginBottom: '20px',
+    textAlign: 'center',
+  },
+  tableContainer: {
+    maxWidth: '800px',
+    margin: '0 auto',
+    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+    borderRadius: '8px',
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+    fontSize: '16px',
+    textAlign: 'left',
+  },
+  th: {
+    backgroundColor: '#0070f3',
+    color: '#fff',
+    padding: '12px 15px',
+    fontWeight: 'bold',
+  },
+  td: {
+    padding: '12px 15px',
+    borderBottom: '1px solid #ddd',
+  },
+  noData: {
+    textAlign: 'center',
+    padding: '20px',
+    fontSize: '16px',
+    color: '#555',
+  },
+};

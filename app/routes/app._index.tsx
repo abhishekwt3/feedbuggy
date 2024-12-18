@@ -6,7 +6,8 @@ import {
   Text,
   Card,
   BlockStack,
-  Button
+  Button,
+  Link
 } from "@shopify/polaris";
 import { authenticate } from "../shopify.server";
 
@@ -49,6 +50,14 @@ export default function Index() {
             external 
             target="_blank">Add widget</Button>
           </Card>
+
+          <Link
+                            url="app/dashboard"
+                            target="_blank"
+                            removeUnderline
+                          >
+                            App Bridge
+                          </Link>
         </Layout.Section>
       </Layout>
     </Page>
