@@ -24,10 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
   submitFeedbackButton.addEventListener('click', async () => {
     const email = document.getElementById('feedback-email').value;
     const feedbackText = document.getElementById('feedback-text').value;
+    const shopId = window.shopUrl;
 
     // Validate feedback
     if (!feedbackText) {
       alert('Please enter your feedback.');
+      return;
+    }
+    if (!shopId) {
+      alert('Unable to determine the shop URL. Please try again.');
       return;
     }
 
@@ -38,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, feedback: feedbackText }),
+        body: JSON.stringify({ email, feedback: feedbackText, shopId }),
       });
 
       if (response.ok) {
