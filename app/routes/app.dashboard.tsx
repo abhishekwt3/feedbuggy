@@ -2,7 +2,8 @@ import { type LoaderFunctionArgs } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import prisma from '../db.server';
 import { authenticate } from "../shopify.server";
-import { useState } from 'react';
+import { useState, CSSProperties  } from 'react';
+
 // Define the loader function
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { admin } = await authenticate.admin(request);
@@ -89,7 +90,7 @@ export default function DashboardPage() {
   );
 }
 
-const styles = {
+const styles: { [key: string]: CSSProperties } = {
   container: {
     padding: '20px',
     fontFamily: 'Arial, sans-serif',
@@ -112,7 +113,7 @@ const styles = {
   },
   table: {
     width: '100%',
-    borderCollapse: 'collapse',
+    borderCollapse: 'collapse' as 'collapse',
     fontSize: '16px',
     textAlign: 'left',
   },

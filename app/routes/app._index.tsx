@@ -32,7 +32,7 @@ export default function Index() {
   const {myshopifyDomain } = useLoaderData<typeof loader>();
   const nav = useNavigation();
   const navigate = useNavigate();
-  const installUrl = `https://${myshopifyDomain}/admin/themes/current/editor?template=product&addAppBlockId=${WIDGET_ID}/feedback-widget&target=sectionGroup:header`;
+  const installUrl = `https://${myshopifyDomain}/admin/themes/current/editor?template=product&addAppBlockId=${WIDGET_ID}/feedback-widget&target=sectionGroup:footer`;
   
 
 
@@ -48,16 +48,8 @@ export default function Index() {
             </BlockStack>
             <Button url={installUrl}
             external 
-            target="_blank">Add widget</Button>
+            target="_blank">Install widget</Button>
           </Card>
-
-          <Link
-                            url="app/dashboard"
-                            target="_blank"
-                            removeUnderline
-                          >
-                            App Bridge
-                          </Link>
         </Layout.Section>
       </Layout>
     </Page>
