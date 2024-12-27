@@ -1,40 +1,50 @@
 <div id="feedback-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
   <!-- Feedback Button -->
-  <button 
-    id="feedback-widget-button" 
+  <button
+    id="feedback-widget-button"
     style="background-color: {{ settings.button_color }}; padding: 10px 20px; border-radius: 8px; color: white; border: none; cursor: pointer; font-size: 16px;"
   >
     {{ settings.button_text }}
   </button>
 
   <!-- Feedback Modal -->
-  <div 
+  <div
     id="feedback-modal" 
     style="display: none; position: fixed; bottom: 80px; right: 20px; background-color: white; padding: 20px; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); width: 320px; z-index: 10000;"
   >
     <h3 style="margin: 0 0 10px; font-size: 18px; color: #333;">We'd love to hear your feedback!</h3>
-    <textarea 
-      id="feedback-text" 
-      placeholder="Enter your feedback here..." 
+    <!-- Star Rating -->
+    <div style="margin-bottom: 10px;">
+      <label style="font-size: 14px; color: #333;">Rate us:</label>
+      <div style="display: flex; gap: 5px;">
+        {% for i in (1..5) %}
+          <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" style="display: none;">
+          <label for="star{{ i }}" style="font-size: 20px; cursor: pointer;">&#9733;</label>
+        {% endfor %}
+      </div>
+    </div>
+    <textarea
+      id="feedback-text"
+      placeholder="Enter your feedback here..."
       style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;"
     ></textarea>
-    <input 
-      type="email" 
-      id="feedback-email" 
-      placeholder="Your email (optional)" 
+    <input
+      type="email"
+      id="feedback-email"
+      placeholder="Your email (optional)"
       style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;"
     />
     <div>
       <!-- Submit Button -->
-      <button 
-        id="submit-feedback" 
+      <button
+        id="submit-feedback"
         style="background-color: #007acc; color: white; padding: 10px; width: 100%; border: none; border-radius: 4px; font-size: 14px; margin-bottom: 10px;"
       >
         Submit
       </button>
       <!-- Close Modal Button -->
-      <button 
-        id="close-modal" 
+      <button
+        id="close-modal"
         style="background-color: #f44336; color: white; padding: 10px; width: 100%; border: none; border-radius: 4px; font-size: 14px;"
       >
         Close
@@ -67,3 +77,20 @@
   ]
 }
 {% endschema %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const stars = document.querySelectorAll('.star-rating .star');
+    stars.forEach(star => {
+      star.addEventListener('click', function() {
+        const rating = this.htmlFor.replace('star', '');
+        stars.forEach(s => {
+          s.classList.remove('checked');
+          if (s.htmlFor <= 'star' + rating) {
+            s.classList.add('checked');
+          }
+        });
+      });
+    });
+  });
+</script>

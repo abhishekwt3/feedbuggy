@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "8942d9684d3c430bdf7995a4e760f9ec"
-application_url = "https://feedbuggy.vercel.app"
+application_url = "https://beautifully-initially-kingston-instrumentation.trycloudflare.com"
 embedded = true
 name = "feedbuggy"
 handle = "feedbuggy"
@@ -19,9 +19,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://feedbuggy.vercel.app/auth/callback",
-  "https://feedbuggy.vercel.app/auth/shopify/callback",
-  "https://feedbuggy.vercel.app/api/auth/callback"
+  "https://beautifully-initially-kingston-instrumentation.trycloudflare.com/auth/callback",
+  "https://beautifully-initially-kingston-instrumentation.trycloudflare.com/auth/shopify/callback",
+  "https://beautifully-initially-kingston-instrumentation.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]

@@ -1,5 +1,5 @@
 import {type LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData, useNavigation, useNavigate } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import {
   Page,
   Layout,
@@ -7,7 +7,6 @@ import {
   Card,
   BlockStack,
   Button,
-  Link
 } from "@shopify/polaris";
 import { authenticate } from "../shopify.server";
 
@@ -30,12 +29,7 @@ const WIDGET_ID = process.env.SHOPIFY_FEED_WIDGET_ID || "";
 
 export default function Index() {
   const {myshopifyDomain } = useLoaderData<typeof loader>();
-  const nav = useNavigation();
-  const navigate = useNavigate();
   const installUrl = `https://${myshopifyDomain}/admin/themes/current/editor?template=product&addAppBlockId=${WIDGET_ID}/feedback-widget&target=sectionGroup:footer`;
-  
-
-
   return (
     <Page narrowWidth>
       <Layout>
@@ -47,7 +41,7 @@ export default function Index() {
               </Text>
             </BlockStack>
             <Button url={installUrl}
-            external 
+            external
             target="_blank">Install widget</Button>
           </Card>
         </Layout.Section>
