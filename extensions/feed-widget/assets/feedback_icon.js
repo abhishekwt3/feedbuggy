@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const feedbackModal = document.getElementById('feedback-modal');
   const closeModalButton = document.getElementById('close-modal');
   const submitFeedbackButton = document.getElementById('submit-feedback');
+  const starRating = document.getElementById('star-rating');
+  const stars = starRating.getElementsByClassName('star');
+  let currentRating = 0;
 
   // Debugging: Ensure all elements are found
   if (!feedbackButton || !feedbackModal || !closeModalButton || !submitFeedbackButton) {
@@ -20,9 +23,23 @@ document.addEventListener('DOMContentLoaded', () => {
     feedbackModal.style.display = 'none';
   });
 
+    // Star rating functionality
+    Array.from(stars).forEach(star => {
+      star.addEventListener('click', () => {
+        currentRating = parseInt(star.getAttribute('data-value'), 10);
+        updateStars();
+      });
+    });
+
+    function updateStars() {
+      Array.from(stars).forEach(star => {
+        star.classList.toggle('checked', parseInt(star.getAttribute('data-value'), 10) <= currentRating);
+      });
+    }
+
   // Handle feedback submission
   submitFeedbackButton.addEventListener('click', async () => {
-    const rating = document.querySelector('input[name="rating"]:checked').value;
+   // const rating = document.querySelector('input[name="rating"]:checked').value;
     const email = document.getElementById('feedback-email').value;
     const feedbackText = document.getElementById('feedback-text').value;
     const shopId = window.shopUrl;
@@ -30,6 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Validate feedback
     if (!feedbackText) {
       alert('Please enter your feedback.');
+      return;
+    }
+    if (!currentRating) {
+      alert('Please select a rating.');
       return;
     }
     if (!shopId) {
@@ -44,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, feedback: feedbackText, shopId, rating }),
+        body: JSON.stringify({ email, feedback: feedbackText, shopId, rating: currentRating }),
       });
 
       if (response.ok) {

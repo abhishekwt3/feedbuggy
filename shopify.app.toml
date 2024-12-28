@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "8942d9684d3c430bdf7995a4e760f9ec"
-application_url = "https://bouquet-manufacturers-factor-elliott.trycloudflare.com"
+application_url = "https://winners-adjust-richardson-locate.trycloudflare.com"
 embedded = true
 name = "feedbuggy"
 handle = "feedbuggy"
@@ -19,9 +19,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://bouquet-manufacturers-factor-elliott.trycloudflare.com/auth/callback",
-  "https://bouquet-manufacturers-factor-elliott.trycloudflare.com/auth/shopify/callback",
-  "https://bouquet-manufacturers-factor-elliott.trycloudflare.com/api/auth/callback"
+  "https://winners-adjust-richardson-locate.trycloudflare.com/auth/callback",
+  "https://winners-adjust-richardson-locate.trycloudflare.com/auth/shopify/callback",
+  "https://winners-adjust-richardson-locate.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]

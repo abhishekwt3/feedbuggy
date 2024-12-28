@@ -16,10 +16,9 @@
     <!-- Star Rating -->
     <div style="margin-bottom: 10px;">
       <label style="font-size: 14px; color: #333;">Rate us:</label>
-      <div id="star-rating" style="display: flex; gap: 5px;">
+      <div id="star-rating" class="star-rating" style="display: flex; gap: 5px;">
         {% for i in (1..5) %}
-          <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" style="display: none;">
-          <label for="star{{ i }}" style="font-size: 20px; cursor: pointer;">&#9733;</label>
+          <span class="star" data-value="{{ i }}">&#9733;</span>
         {% endfor %}
       </div>
     </div>
@@ -52,6 +51,17 @@
     </div>
   </div>
 </div>
+
+<style>
+  .star-rating .star {
+    color: #ccc;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  .star-rating .star.checked {
+    color: #f39c12;
+  }
+</style>
 
 <!-- Include Feedback Widget Script -->
 <script src="{{ 'feedback_icon.js' | asset_url }}" defer></script>
