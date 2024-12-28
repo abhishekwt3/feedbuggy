@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Handle feedback submission
   submitFeedbackButton.addEventListener('click', async () => {
+    const rating = document.querySelector('input[name="rating"]:checked').value;
     const email = document.getElementById('feedback-email').value;
     const feedbackText = document.getElementById('feedback-text').value;
     const shopId = window.shopUrl;
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, feedback: feedbackText, shopId }),
+        body: JSON.stringify({ email, feedback: feedbackText, shopId, rating }),
       });
 
       if (response.ok) {

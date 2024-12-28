@@ -22,7 +22,7 @@ export let loader: LoaderFunction = async ({ request }) => {
 export let action: ActionFunction = async ({ request }) => {
   try {
     const body = await request.json();
-    const { email, feedback, shopId } = body;
+    const { email, feedback, shopId, rating } = body;
 
     if (!feedback) {
       return new Response(JSON.stringify({ message: 'Feedback is required.' }), {
@@ -42,7 +42,7 @@ export let action: ActionFunction = async ({ request }) => {
     }
 
     await prisma.feedback.create({
-      data: { email: email || null, feedback, shopId },
+      data: { email: email || null, feedback, shopId, rating },
     });
 
     return new Response(JSON.stringify({ message: 'Feedback submitted successfully!' }), {

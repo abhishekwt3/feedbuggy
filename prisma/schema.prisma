@@ -36,5 +36,6 @@ model Feedback {
   email     String
   feedback  String
   shopId    String
+  rating    Int
   createdAt DateTime @default(now())
 }
