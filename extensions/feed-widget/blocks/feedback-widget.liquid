@@ -2,9 +2,9 @@
   <!-- Feedback Button -->
   <button
     id="feedback-widget-button"
-    style="background-color: {{ settings.button_color }}; padding: 10px 20px; border-radius: 8px; color: white; border: none; cursor: pointer; font-size: 16px;"
+    style="background-color: #008000; padding: 10px 20px; border-radius: 8px; color: white; border: none; cursor: pointer; font-size: 16px;"
   >
-    {{ settings.button_text }}
+    {{ section.settings.button0 | default: "Feedback0" }}
   </button>
 
   <!-- Feedback Modal -->
@@ -76,13 +76,12 @@
       "type": "color",
       "id": "button_color",
       "label": "Button Color",
-      "default": "#007acc"
+      "default": "#0000FF"
     },
     {
       "type": "text",
-      "id": "button_text",
+      "id": "button0",
       "label": "Button Text",
-      "default": "📝 Feedback"
     }
   ]
 }
